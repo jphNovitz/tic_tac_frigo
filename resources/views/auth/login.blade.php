@@ -23,6 +23,10 @@
                             @if ($errors->has('password'))
                                 <span class="text-error text-sm">{{ $errors->first('password') }}</span>
                             @endif
+                            <label class="label cursor-pointer justify-start gap-2 mt-2">
+                                <input type="checkbox" name="remember" class="checkbox checkbox-sm" />
+                                <span class="label-text text-sm">{{ __('auth.remember_me') }}</span>
+                            </label>
                             <div><a class="link link-hover">{{__('auth.forgot_password')}}</a></div>
                             <button class="btn btn-neutral mt-4">{{__('auth.login')}}</button>
                         </fieldset>

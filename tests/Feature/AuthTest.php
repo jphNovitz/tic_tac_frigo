@@ -116,5 +116,21 @@ class AuthTest extends TestCase
         $response->assertRedirect(route('dashboard'));
     }
 
+    public function test_user_can_login_with_remember_me(): void
+    {
+        $user = User::factory()->create([
+            'email' => 'remember@test.test',
+            'password' => bcrypt('password'),
+        ]);
 
+        $response = $this->post(route('login'), [
+            'email' => 'remember@test.test',
+            'password' => 'password',
+            'remember' => 'on',
+        ]);
+
+        $response->assertRedirect(route('dashboard'));
+        $this->assertAuthenticatedAs($user);
+        $response->assertCookie(auth()->guard()->getRecallerName());
+    }
 }
