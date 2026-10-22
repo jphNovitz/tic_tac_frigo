@@ -21,13 +21,14 @@ class FridgeItemFactory extends Factory
         return [
             'user_id' => User::factory(),
             'product_name' => fake()->word(),
-            'expires_at' => fake()->dateTimeBetween('now', '+1 month'),
-            'quantity' => fake()->randomElement([
-                '1 bouteille',
-                '2 pots',
-                '500 g',
-                '1 L',
+            'unit_count' => fake()->numberBetween(1, 20),
+            'unit_label' => fake()->randomElement([
+                'bouteille de 1L',
+                'pots de 125g',
+                'pièces',
+                'paquets',
             ]),
+            'expires_at' => fake()->dateTimeBetween('now', '+1 month'),
         ];
     }
 }

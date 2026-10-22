@@ -25,8 +25,9 @@ class FridgeItemTest extends TestCase
         FridgeItem::factory()->create([
             'user_id' => $user->id,
             'product_name' => 'Lait demi-écrémé',
+            'unit_count' => 2,
+            'unit_label' => 'bouteilles',
             'expires_at' => now()->addDays(7)->toDateString(),
-            'quantity' => '2 bouteilles',
         ]);
 
         $this->assertGreaterThan($beforeCount, FridgeItem::all()->count());
@@ -43,8 +44,9 @@ class FridgeItemTest extends TestCase
         $item = FridgeItem::factory()->create([
             'user_id' => $user->id,
             'product_name' => 'Lait demi-écrémé',
+            'unit_count' => 2,
+            'unit_label' => 'bouteilles',
             'expires_at' => now()->addDays(7)->toDateString(),
-            'quantity' => '2 bouteilles',
         ]);
 
         $this->assertTrue($user->fridgeItems->contains($item));
@@ -60,8 +62,9 @@ class FridgeItemTest extends TestCase
         $item = FridgeItem::factory()->create([
             'user_id' => $user->id,
             'product_name' => 'Lait demi-écrémé',
+            'unit_count' => 2,
+            'unit_label' => 'bouteilles',
             'expires_at' => now()->addDays(7)->toDateString(),
-            'quantity' => '2 bouteilles',
         ]);
 
         $this->assertTrue($item->user->is($user));
@@ -77,8 +80,9 @@ class FridgeItemTest extends TestCase
         $item = FridgeItem::factory()->create([
             'user_id' => $user->id,
             'product_name' => 'Lait demi-écrémé',
+            'unit_count' => 2,
+            'unit_label' => 'bouteilles',
             'expires_at' => now()->addDays(7)->toDateString(),
-            'quantity' => '2 bouteilles',
         ]);
 
         $this->assertInstanceOf(Carbon::class, $item->expires_at);
@@ -94,8 +98,9 @@ class FridgeItemTest extends TestCase
         $item1 = FridgeItem::factory()->create([
             'user_id' => $user1->id,
             'product_name' => 'Lait',
+            'unit_count' => 2,
+            'unit_label' => 'bouteilles',
             'expires_at' => now()->addDays(7)->toDateString(),
-            'quantity' => '2 bouteilles',
         ]);
         $user2 = User::create([
             'name' => 'Jane Doe',
@@ -105,8 +110,9 @@ class FridgeItemTest extends TestCase
         $item2 = FridgeItem::factory()->create([
             'user_id' => $user2->id,
             'product_name' => 'Lait',
+            'unit_count' => 2,
+            'unit_label' => 'bouteilles',
             'expires_at' => now()->addDays(7)->toDateString(),
-            'quantity' => '2 bouteilles',
         ]);
 
         $user1->delete();

@@ -17,7 +17,9 @@ class FridgeItem extends Model
         'expires_at',
         'consumed_at',
         'alerted_at',
-        'quantity',
+        'unit_count',
+        'unit_label',
+
     ];
 
     /**
@@ -26,6 +28,7 @@ class FridgeItem extends Model
      * @var array
      */
     protected $casts = [
+        'unit_count' => 'integer',
         'expires_at' => 'date:d-m-Y',
         'consumed_at' => 'datetime:d-m-Y',
         'alerted_at' => 'datetime:d-m-Y',
