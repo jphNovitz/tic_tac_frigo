@@ -2,14 +2,18 @@ services:
     app:
         build: .
         ports:
-            - "8090:80"
+            - "8090:8080"
         environment:
-            SERVER_NAME: ":80"
+            SERVER_NAME: ":8080"
         volumes:
             - .:/app
         tty: true
         depends_on:
             - db
+        security_opt:
+            - no-new-privileges:true
+        cap_drop:
+            - ALL
 
     db:
         image: mariadb:11
