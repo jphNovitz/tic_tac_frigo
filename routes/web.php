@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\Admin\DashbordController;
+use App\Http\Controllers\Admin\Fridge\FridgeItemController;
 use App\Http\Controllers\Auth\LoginController;
 use App\Http\Controllers\Auth\RegisterController;
 use Illuminate\Support\Facades\Route;
@@ -17,4 +18,6 @@ Route::middleware('guest')->group(function () {
 Route::middleware('auth')->group(function () {
     Route::post('logout', [LoginController::class, 'logout'])->name('logout');
     Route::get('dashboard', [DashbordController::class, 'index'])->name('dashboard');
+    Route::get('nouveau-produit', [FridgeItemController::class, 'create'])->name('fridge-items.create');
+    Route::post('nouveau-produit', [FridgeItemController::class, 'store'])->name('fridge-items.store');
 });

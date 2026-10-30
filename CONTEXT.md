@@ -17,5 +17,5 @@ Le nombre entier d'unités physiques disponibles pour un article du frigo. Elle 
 _Avoid_: Poids, volume, conditionnement
 
 **Conditionnement**:
-La description d'une unité physique comptée par la quantité, par exemple « bouteille de 1 L », « pot de 125 g » ou « paquet ».
+Le type prédéfini et facultatif d'une unité physique comptée par la quantité, par exemple « pièce », « bouteille », « pot » ou « paquet ».
 _Avoid_: Quantité

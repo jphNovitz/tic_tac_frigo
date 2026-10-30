@@ -29,6 +29,35 @@ class FridgeItemCreationTest extends TestCase
     }
 
     /**
+     * Verify that submitted values are repopulated after a validation error.
+     */
+    public function test_form_repopulates_submitted_values_after_a_validation_error(): void
+    {
+        $user1 = User::factory()->create();
+        $expiresAt = now()->addDays(7)->toDateString();
+
+        $response = $this->actingAs($user1)
+            ->from(route('fridge-items.create'))
+            ->post(route('fridge-items.store'), [
+                'product_name' => 'Kinder',
+                'expires_at' => $expiresAt,
+                'unit_count' => 0,
+                'unit_label' => 'bouteille',
+            ]);
+
+        $response->assertRedirect(route('fridge-items.create'));
+        $response->assertSessionHasErrors(['unit_count']);
+
+        $formResponse = $this->get(route('fridge-items.create'));
+
+        $formResponse->assertOk();
+        $formResponse->assertSee('value="Kinder"', false);
+        $formResponse->assertSee('value="'.$expiresAt.'"', false);
+        $formResponse->assertSee('value="0"', false);
+        $formResponse->assertSeeInOrder(['value="bouteille"', 'selected'], false);
+    }
+
+    /**
      * Verify that a guest cannot submit the add-fridge-item form and is
      * redirected to the login page.
      */
@@ -38,7 +67,7 @@ class FridgeItemCreationTest extends TestCase
             'product_name' => 'Kinder',
             'expires_at' => now()->addDays(7)->toDateString(),
             'unit_count' => 10,
-            'unit_label' => 'pièces',
+            'unit_label' => 'pièce',
         ]);
 
         $response->assertRedirect(route('login'));
@@ -57,7 +86,7 @@ class FridgeItemCreationTest extends TestCase
             'product_name' => 'Kinder',
             'expires_at' => now()->addDays(7)->toDateString(),
             'unit_count' => 10,
-            'unit_label' => 'pièces',
+            'unit_label' => 'pièce',
         ]);
 
         $response->assertRedirect(route('dashboard'));
@@ -66,7 +95,7 @@ class FridgeItemCreationTest extends TestCase
             'product_name' => 'Kinder',
             'expires_at' => now()->addDays(7)->toDateString(),
             'unit_count' => 10,
-            'unit_label' => 'pièces',
+            'unit_label' => 'pièce',
         ]);
     }
 
@@ -105,7 +134,7 @@ class FridgeItemCreationTest extends TestCase
             'product_name' => 'Kinder',
             'expires_at' => now()->addDays(7)->toDateString(),
             'unit_count' => 0,
-            'unit_label' => 'pièces',
+            'unit_label' => 'pièce',
         ]);
 
         $response->assertSessionHasErrors(['unit_count']);
@@ -123,6 +152,7 @@ class FridgeItemCreationTest extends TestCase
             'product_name' => 'Kinder',
             'expires_at' => now()->addDays(7)->toDateString(),
             'unit_count' => 1,
+            'unit_label' => '',
         ]);
 
         $response->assertRedirect(route('dashboard'));
@@ -191,9 +221,9 @@ class FridgeItemCreationTest extends TestCase
     }
 
     /**
-     * Verify that unit label cannot exceed 255 characters.
+     * Verify that an unsupported unit label is rejected.
      */
-    public function test_unit_label_cannot_exceed_255_characters(): void
+    public function test_unit_label_must_be_a_supported_value(): void
     {
         $user1 = User::factory()->create();
 
@@ -201,7 +231,7 @@ class FridgeItemCreationTest extends TestCase
             'product_name' => 'Kinder',
             'expires_at' => now()->addDays(7)->toDateString(),
             'unit_count' => 1,
-            'unit_label' => str_repeat('a', 256),
+            'unit_label' => 'seau',
         ]);
 
         $response->assertSessionHasErrors('unit_label');
@@ -220,13 +250,13 @@ class FridgeItemCreationTest extends TestCase
             'product_name' => 'Kinder',
             'expires_at' => now()->addDays(7)->toDateString(),
             'unit_count' => 1,
-            'unit_label' => 'pièces',
+            'unit_label' => 'pièce',
         ]);
         $response = $this->actingAs($user1)->post(route('fridge-items.store'), [
             'product_name' => 'Kinder',
             'expires_at' => now()->addDays(8)->toDateString(),
             'unit_count' => 1,
-            'unit_label' => 'pièces',
+            'unit_label' => 'pièce',
         ]);
 
         $response->assertRedirect(route('dashboard'));
@@ -236,7 +266,7 @@ class FridgeItemCreationTest extends TestCase
             'product_name' => 'Kinder',
             'expires_at' => now()->addDays(7)->toDateString(),
             'unit_count' => 1,
-            'unit_label' => 'pièces',
+            'unit_label' => 'pièce',
         ]);
 
         $this->assertDatabaseHas('fridge_items', [
@@ -244,7 +274,7 @@ class FridgeItemCreationTest extends TestCase
             'product_name' => 'Kinder',
             'expires_at' => now()->addDays(8)->toDateString(),
             'unit_count' => 1,
-            'unit_label' => 'pièces',
+            'unit_label' => 'pièce',
         ]);
     }
 }
