@@ -11,6 +11,17 @@ use Illuminate\Support\Facades\Auth;
 
 class FridgeItemController extends Controller
 {
+    public function index(): View
+    {
+
+        $fridgeItems = Auth::user()->fridgeItems()
+            ->whereNull('consumed_at')
+            ->orderBy('expires_at', 'asc')
+            ->get();
+
+        return view('admin.fridge.index', compact('fridgeItems'));
+    }
+
     public function create(): View
     {
         return view('admin.fridge.create-form');

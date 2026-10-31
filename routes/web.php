@@ -18,6 +18,7 @@ Route::middleware('guest')->group(function () {
 Route::middleware('auth')->group(function () {
     Route::post('logout', [LoginController::class, 'logout'])->name('logout');
     Route::get('dashboard', [DashbordController::class, 'index'])->name('dashboard');
+    Route::get('liste', [FridgeItemController::class, 'index'])->name('fridge-items.index');
     Route::get('nouveau-produit', [FridgeItemController::class, 'create'])->name('fridge-items.create');
     Route::post('nouveau-produit', [FridgeItemController::class, 'store'])->name('fridge-items.store');
 });
