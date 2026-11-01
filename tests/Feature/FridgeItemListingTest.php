@@ -5,6 +5,7 @@ namespace Tests\Feature;
 use App\Models\FridgeItem;
 use App\Models\User;
 use Illuminate\Foundation\Testing\RefreshDatabase;
+use PHPUnit\Framework\Attributes\DataProvider;
 use Tests\TestCase;
 
 class FridgeItemListingTest extends TestCase
@@ -98,5 +99,53 @@ class FridgeItemListingTest extends TestCase
         $response->assertSeeText($user2Item->product_name);
         $response->assertDontSeeText($user1Item->product_name);
 
+    }
+
+    /**
+     * Verify that fridge items display the expected status color according to
+     * their expiration date.
+     */
+    #[DataProvider('expirationStatusCases')]
+    public function test_fridge_items_display_the_expected_status_color_for_their_expiration_date(int $daysFromToday,
+        string $expectedStatusClass, ): void
+    {
+        $this->travelTo('2026-01-15 12:00:00');
+        $user1 = User::factory()->create();
+        $fridgeItem = FridgeItem::factory()->for($user1)
+            ->create([
+                'product_name' => 'Kinder',
+                'expires_at' => today()->addDays($daysFromToday),
+            ]);
+
+        $response = $this->actingAs($user1)->get(route('fridge-items.index'));
+
+        $response->assertOk();
+        $response->assertSeeText($fridgeItem->product_name);
+        $response->assertSee($expectedStatusClass);
+
+        $statusClasses = [
+            'status-error',
+            'status-warning',
+            'status-success',
+        ];
+
+        foreach ($statusClasses as $statusClass) {
+            if ($statusClass === $expectedStatusClass) {
+                continue;
+            }
+
+            $response->assertDontSee($statusClass);
+        }
+
+    }
+
+    public static function expirationStatusCases(): array
+    {
+        return [
+            'expired yesterday' => [-1, 'status-error'],
+            'expires today' => [0, 'status-warning'],
+            'expires in thirteen days' => [13, 'status-warning'],
+            'expires in fourteen days' => [14, 'status-success'],
+        ];
     }
 }
