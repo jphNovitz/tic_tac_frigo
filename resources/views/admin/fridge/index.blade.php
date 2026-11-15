@@ -14,18 +14,18 @@
                         : {{$item->expires_at->format('d m Y')}}
                     </div>
                     <div class="inline-grid *:[grid-area:1/1]">
-                            <?php $diff = (int)today()->diffInDays($item->expires_at, false,); ?>
-                        @if($diff < 0)
+                        @if($item->expireAlert['diff'] < 0)
                             <div class="status status-error animate-ping"></div>
                             <div class="status status-error"></div>
-                        @elseif($diff < 14)
+                        @elseif($item->expireAlert['diff'] >= 0 and $item->expireAlert['diff'] < 14)
                             <div class="status status-warning animate-ping"></div>
                             <div class="status status-warning"></div>
                         @else
                             <div class="status status-success animate-ping"></div>
                             <div class="status status-success"></div>
                         @endif
-                    </div> {{ $item->expires_at->diffForHumans() }}
+                    </div>
+                    {{$item->expireAlert['label']}}
                 </div>
             </li>
         @endforeach
