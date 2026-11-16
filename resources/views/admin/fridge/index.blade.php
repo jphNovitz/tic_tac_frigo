@@ -26,6 +26,11 @@
                         @endif
                     </div>
                     {{$item->expireAlert['label']}}
+                    <form action="{{route('fridge-items.consume', $item)}}" method="POST">
+                        @csrf
+                        @method('PATCH')
+                        <button type="submit" class="btn btn-sm btn-outline btn-success mt-2">{{__('fridge.consume')}}</button>
+                    </form>
                 </div>
             </li>
         @endforeach

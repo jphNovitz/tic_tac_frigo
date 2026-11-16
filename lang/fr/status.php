@@ -3,6 +3,7 @@
 return [
     'fridge' => [
         'item_added' => 'Produit ajouté au frigo !',
+        'item_consumed' => 'Produit consommé !',
     ],
     'expiration' => [
         'today' => 'Expire aujourd\'hui',

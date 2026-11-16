@@ -21,4 +21,5 @@ Route::middleware('auth')->group(function () {
     Route::get('liste', [FridgeItemController::class, 'index'])->name('fridge-items.index');
     Route::get('nouveau-produit', [FridgeItemController::class, 'create'])->name('fridge-items.create');
     Route::post('nouveau-produit', [FridgeItemController::class, 'store'])->name('fridge-items.store');
+    Route::patch('consommer-produit/{fridge_item}', [FridgeItemController::class, 'consume'])->name('fridge-items.consume');
 });

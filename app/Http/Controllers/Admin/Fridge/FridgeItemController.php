@@ -36,4 +36,15 @@ class FridgeItemController extends Controller
 
         return redirect()->route('dashboard')->with('status', 'fridge.item_added');
     }
+
+    public function consume(FridgeItem $fridgeItem): RedirectResponse
+    {
+        if ($fridgeItem->user_id !== Auth::id()) {
+            abort(404, 'Not Found');
+        }
+
+        $fridgeItem->update(['consumed_at' => now()]);
+
+        return redirect()->route('fridge-items.index')->with('status', 'fridge.item_consumed');
+    }
 }

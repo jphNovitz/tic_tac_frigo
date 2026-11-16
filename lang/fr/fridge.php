@@ -8,5 +8,6 @@ return [
     'unit_count' => 'Quantité',
     'unit_label' => 'Conditionnement',
     'unit_label_empty' => 'Sans conditionnement',
+    'consume' => 'Consommer',
     'submit' => 'Ajouter',
 ];
