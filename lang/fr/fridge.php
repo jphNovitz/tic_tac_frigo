@@ -8,6 +8,8 @@ return [
     'unit_count' => 'Quantité',
     'unit_label' => 'Conditionnement',
     'unit_label_empty' => 'Sans conditionnement',
+    'increase' => 'Augmenter',
+    'decrease' => 'Diminuer',
     'consume' => 'Consommer',
     'submit' => 'Ajouter',
 ];

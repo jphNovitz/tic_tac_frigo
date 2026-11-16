@@ -8,6 +8,7 @@
         @foreach($fridgeItems as $item)
             <li class="list-row">
                 <div>
+                    <div>{{ $item->unit_count }} </div>
                     <div>{{ $item->product_name }} </div>
                     <div
                         class="flex flex-col lg:flex-row text-xs uppercase font-semibold opacity-60">{{__('fridge.expires_at')}}
@@ -26,6 +27,16 @@
                         @endif
                     </div>
                     {{$item->expireAlert['label']}}
+                    <form action="{{route('fridge-items.increase', $item)}}" method="POST">
+                        @csrf
+                        @method('PATCH')
+                        <button type="submit" class="btn btn-sm btn-outline btn-success mt-2">{{__('fridge.increase')}}</button>
+                    </form>
+                    <form action="{{route('fridge-items.decrease', $item)}}" method="POST">
+                        @csrf
+                        @method('PATCH')
+                        <button type="submit" class="btn btn-sm btn-outline btn-success mt-2">{{__('fridge.decrease')}}</button>
+                    </form>
                     <form action="{{route('fridge-items.consume', $item)}}" method="POST">
                         @csrf
                         @method('PATCH')

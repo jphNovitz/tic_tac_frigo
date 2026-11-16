@@ -47,4 +47,29 @@ class FridgeItemController extends Controller
 
         return redirect()->route('fridge-items.index')->with('status', 'fridge.item_consumed');
     }
+
+    public function increase(FridgeItem $fridgeItem): RedirectResponse
+    {
+        if ($fridgeItem->user_id !== Auth::id()) {
+            abort(404, 'Not Found');
+        }
+
+        $fridgeItem->update(['unit_count' => $fridgeItem->unit_count + 1]);
+
+        return redirect()->route('fridge-items.index')->with('status', 'fridge.item_increased');
+    }
+
+    public function decrease(FridgeItem $fridgeItem): RedirectResponse
+    {
+        if ($fridgeItem->user_id !== Auth::id()) {
+            abort(404, 'Not Found');
+        }
+        if ($fridgeItem->unit_count > 1) {
+            $fridgeItem->update(['unit_count' => $fridgeItem->unit_count - 1]);
+
+            return redirect()->route('fridge-items.index')->with('status', 'fridge.item_decreased');
+        }
+
+        return redirect()->route('fridge-items.index')->with('status', 'fridge.item_cannot_decrease');
+    }
 }

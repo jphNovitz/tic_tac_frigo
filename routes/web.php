@@ -22,4 +22,6 @@ Route::middleware('auth')->group(function () {
     Route::get('nouveau-produit', [FridgeItemController::class, 'create'])->name('fridge-items.create');
     Route::post('nouveau-produit', [FridgeItemController::class, 'store'])->name('fridge-items.store');
     Route::patch('consommer-produit/{fridge_item}', [FridgeItemController::class, 'consume'])->name('fridge-items.consume');
+    Route::patch('quantite/{fridge_item}/augmenter', [FridgeItemController::class, 'increase'])->name('fridge-items.increase');
+    Route::patch('quantite/{fridge_item}/diminuer', [FridgeItemController::class, 'decrease'])->name('fridge-items.decrease');
 });
