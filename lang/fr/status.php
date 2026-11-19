@@ -6,6 +6,7 @@ return [
         'item_consumed' => 'Produit consommé !',
         'item_increased' => 'Quantité augmentée !',
         'item_decreased' => 'Quantité diminuée !',
+        'item_updated' => 'Produit mis à jour !',
         'item_cannot_decrease' => 'La quantité ne peut pas être inférieure à 1.',
     ],
     'expiration' => [

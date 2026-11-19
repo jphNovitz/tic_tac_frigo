@@ -2,6 +2,8 @@
 
 return [
     'add_item' => 'Ajouter un article au frigo',
+    'edit_item' => 'Modifier un article du frigo',
+    'update_item' => 'Mettre à jour un article du frigo',
     'index_title' => 'Articles du frigo',
     'product_name' => 'Nom du produit',
     'expires_at' => 'Date d’expiration',
@@ -12,4 +14,5 @@ return [
     'decrease' => 'Diminuer',
     'consume' => 'Consommer',
     'submit' => 'Ajouter',
+    'update' => 'Mettre à jour',
 ];

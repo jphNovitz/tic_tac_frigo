@@ -42,6 +42,8 @@
                         @method('PATCH')
                         <button type="submit" class="btn btn-sm btn-outline btn-success mt-2">{{__('fridge.consume')}}</button>
                     </form>
+                    <a href="{{route('fridge-items.edit', $item)}}"
+                       class="btn btn-sm btn-outline btn-success mt-2">{{__('fridge.update')}}</a>
                 </div>
             </li>
         @endforeach

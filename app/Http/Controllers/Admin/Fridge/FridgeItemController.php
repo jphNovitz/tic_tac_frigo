@@ -37,6 +37,28 @@ class FridgeItemController extends Controller
         return redirect()->route('dashboard')->with('status', 'fridge.item_added');
     }
 
+    public function edit(FridgeItem $fridgeItem): View
+    {
+        if ($fridgeItem->user_id !== Auth::id()) {
+            abort(404, 'Not Found');
+        }
+
+        return view('admin.fridge.edit-form', compact('fridgeItem'));
+    }
+
+    public function update(StoreFridgeItemRequest $request, FridgeItem $fridgeItem): RedirectResponse
+    {
+        if ($fridgeItem->user_id !== Auth::id()) {
+            abort(404, 'Not Found');
+        }
+
+        $data = $request->validated();
+        $fridgeItem->update($data);
+
+        return redirect()->route('fridge-items.index')
+            ->with('status', 'fridge.item_updated');
+    }
+
     public function consume(FridgeItem $fridgeItem): RedirectResponse
     {
         if ($fridgeItem->user_id !== Auth::id()) {
