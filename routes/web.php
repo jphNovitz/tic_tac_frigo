@@ -27,4 +27,5 @@ Route::middleware('auth')->group(function () {
     Route::patch('consommer-produit/{fridge_item}', [FridgeItemController::class, 'consume'])->name('fridge-items.consume');
     Route::patch('quantite/{fridge_item}/augmenter', [FridgeItemController::class, 'increase'])->name('fridge-items.increase');
     Route::patch('quantite/{fridge_item}/diminuer', [FridgeItemController::class, 'decrease'])->name('fridge-items.decrease');
+    Route::delete('supprimer/{fridge_item}', [FridgeItemController::class, 'destroy'])->name('fridge-items.destroy');
 });

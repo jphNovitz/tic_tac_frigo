@@ -44,6 +44,12 @@
                     </form>
                     <a href="{{route('fridge-items.edit', $item)}}"
                        class="btn btn-sm btn-outline btn-success mt-2">{{__('fridge.update')}}</a>
+                    <form action="{{route('fridge-items.destroy', $item)}}" method="POST"
+                          onsubmit="return confirm('Voulez-vous supprimer cet article ?')">
+                        @csrf
+                        @method('DELETE')
+                        <button type="submit" class="btn btn-sm btn-outline btn-error mt-2">{{__('fridge.destroy')}}</button>
+                    </form>
                 </div>
             </li>
         @endforeach

@@ -98,4 +98,15 @@ class FridgeItemController extends Controller
 
         return redirect()->route('fridge-items.index')->with('status', $status);
     }
+
+    public function destroy(FridgeItem $fridgeItem): RedirectResponse
+    {
+        if ($fridgeItem->user_id !== Auth::id()) {
+            abort(404, 'Not Found');
+        }
+
+        $fridgeItem->delete();
+
+        return redirect()->route('fridge-items.index')->with('status', 'fridge.item_deleted');
+    }
 }

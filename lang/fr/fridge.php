@@ -15,4 +15,5 @@ return [
     'consume' => 'Consommer',
     'submit' => 'Ajouter',
     'update' => 'Mettre à jour',
+    'destroy' => 'Supprimer',
 ];
